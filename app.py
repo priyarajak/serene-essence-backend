@@ -14,22 +14,32 @@ def home():
 
 @app.route('/products')
 def get_products():
+    import sys
+    print("🔍 /products endpoint hit", file=sys.stderr)  # log even when stdout is suppressed
+
     cursor = None
     conn = None
     try:
         conn = get_db_connection()
+        print("✅ DB Connection successful", file=sys.stderr)
         cursor = conn.cursor(dictionary=True)
         cursor.execute("SELECT * FROM products")
         products = cursor.fetchall()
+        print(f"📦 Products fetched: {len(products)} items", file=sys.stderr)
         return jsonify(products)
     except Exception as e:
-        print("PRODUCTS ERROR:", e)
+        print("❌ PRODUCTS ERROR:", e, file=sys.stderr)  # log errors even when hidden
         return jsonify({'error': 'Failed to fetch products'}), 500
     finally:
         if cursor:
             cursor.close()
         if conn:
             conn.close()
+
+@app.route('/test')
+def test():
+    print("🧪 Test route hit!", file=sys.stderr)
+    return "Test successful"
 
 
 @app.route('/products/<int:product_id>', methods=['GET'])
