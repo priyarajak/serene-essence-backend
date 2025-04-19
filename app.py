@@ -14,6 +14,8 @@ def home():
 
 @app.route('/products')
 def get_products():
+    cursor = None
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
@@ -24,8 +26,10 @@ def get_products():
         print("PRODUCTS ERROR:", e)
         return jsonify({'error': 'Failed to fetch products'}), 500
     finally:
-        cursor.close()
-        conn.close()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 
 @app.route('/products/<int:product_id>', methods=['GET'])
@@ -87,8 +91,10 @@ def register_user():
         print("REGISTER ERROR:", e)
         return jsonify({'error': 'Registration failed'}), 500
     finally:
-        cursor.close()
-        conn.close()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 @app.route('/login', methods=['POST'])
 def login_user():
@@ -119,8 +125,10 @@ def login_user():
         print("LOGIN ERROR:", e)
         return jsonify({'error': 'Login failed'}), 500
     finally:
-        cursor.close()
-        conn.close()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 @app.route('/save-address', methods=['POST'])
 def save_address():
@@ -141,8 +149,10 @@ def save_address():
         print("ADDRESS SAVE ERROR:", e)
         return jsonify({'error': 'Address save failed'}), 500
     finally:
-        cursor.close()
-        conn.close()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 
 @app.route('/place-order', methods=['POST'])
@@ -173,8 +183,10 @@ def place_order():
         print("ORDER ERROR:", e)
         return jsonify({'error': 'Order failed'}), 500
     finally:
-        cursor.close()
-        conn.close()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 
 @app.route('/get-addresses/<int:user_id>', methods=['GET'])
@@ -189,8 +201,10 @@ def get_addresses(user_id):
         print("GET ADDRESSES ERROR:", e)
         return jsonify({'error': 'Could not fetch addresses'}), 500
     finally:
-        cursor.close()
-        conn.close()
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
 
 
