@@ -3,10 +3,11 @@ import mysql.connector
 def get_db_connection():
     try:
         conn = mysql.connector.connect(
-            host="localhost",
+            host="maglev.proxy.rlwy.net",
             user="root",
-            password="Pomi@12345",
-            database="serene_essence"
+            password="HwYXYmgfoHCKfuIurQLUkyakgFTeFyqB", 
+            database="railway",
+            port=12984
         )
         return conn
     except Exception as e:
